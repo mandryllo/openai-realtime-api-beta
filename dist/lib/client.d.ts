@@ -12,6 +12,7 @@
  * @property {number} [threshold]
  * @property {number} [prefix_padding_ms]
  * @property {number} [silence_duration_ms]
+ * @property {boolean} [create_response]
  */
 /**
  * Tool definitions
@@ -320,6 +321,7 @@ export type TurnDetectionServerVadType = {
     threshold?: number;
     prefix_padding_ms?: number;
     silence_duration_ms?: number;
+    create_response?: boolean;
 };
 /**
  * Tool definitions
@@ -336,8 +338,7 @@ export type SessionResourceType = {
     model?: string;
     modalities?: string[];
     instructions?: string;
-    voice?: "alloy"|"ash"|"ballad"|"coral"|"echo"|"sage"|"shimmer"|"verse";
-
+    voice?: "alloy" | "ash" | "ballad" | "coral" | "echo" | "sage" | "shimmer" | "verse";
     input_audio_format?: AudioFormatType;
     output_audio_format?: AudioFormatType;
     input_audio_transcription?: AudioTranscriptionType | null;
