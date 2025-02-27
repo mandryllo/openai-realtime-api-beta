@@ -5,6 +5,8 @@
 /**
  * @typedef {Object} AudioTranscriptionType
  * @property {"whisper-1"} model
+ * @property {string} [language]
+ * @property {string} [prompt]
  */
 /**
  * @typedef {Object} TurnDetectionServerVadType
@@ -12,6 +14,7 @@
  * @property {number} [threshold]
  * @property {number} [prefix_padding_ms]
  * @property {number} [silence_duration_ms]
+ * @property {boolean} [create_response]
  */
 /**
  * Tool definitions
@@ -160,10 +163,11 @@
 export class RealtimeClient extends RealtimeEventHandler {
     /**
      * Create a new RealtimeClient instance
-     * @param {{url?: string, apiKey?: string, dangerouslyAllowAPIKeyInBrowser?: boolean, debug?: boolean}} [settings]
+     * @param {{url?: string, model?: string, apiKey?: string, dangerouslyAllowAPIKeyInBrowser?: boolean, debug?: boolean}} [settings]
      */
-    constructor({ url, apiKey, dangerouslyAllowAPIKeyInBrowser, debug }?: {
+    constructor({ url, apiKey, model, dangerouslyAllowAPIKeyInBrowser, debug }?: {
         url?: string;
+        model?: string;
         apiKey?: string;
         dangerouslyAllowAPIKeyInBrowser?: boolean;
         debug?: boolean;
@@ -223,7 +227,7 @@ export class RealtimeClient extends RealtimeEventHandler {
      * Updates session config and conversation config
      * @returns {Promise<true>}
      */
-    connect(): Promise<true>;
+    connect({ model }?: {}): Promise<true>;
     /**
      * Waits for a session.created event to be executed before proceeding
      * @returns {Promise<true>}
@@ -314,12 +318,15 @@ export class RealtimeClient extends RealtimeEventHandler {
 export type AudioFormatType = "pcm16" | "g711_ulaw" | "g711_alaw";
 export type AudioTranscriptionType = {
     model: "whisper-1";
+    language?: string;
+    prompt?: string;
 };
 export type TurnDetectionServerVadType = {
     type: "server_vad";
     threshold?: number;
     prefix_padding_ms?: number;
     silence_duration_ms?: number;
+    create_response?: boolean;
 };
 /**
  * Tool definitions
@@ -336,8 +343,7 @@ export type SessionResourceType = {
     model?: string;
     modalities?: string[];
     instructions?: string;
-    voice?: "alloy"|"ash"|"ballad"|"coral"|"echo"|"sage"|"shimmer"|"verse";
-
+    voice?: "alloy" | "ash" | "ballad" | "coral" | "echo" | "sage" | "shimmer" | "verse";
     input_audio_format?: AudioFormatType;
     output_audio_format?: AudioFormatType;
     input_audio_transcription?: AudioTranscriptionType | null;
