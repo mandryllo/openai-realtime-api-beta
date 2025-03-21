@@ -4,7 +4,7 @@
  */
 /**
  * @typedef {Object} AudioTranscriptionType
- * @property {"whisper-1"} model
+ * @property {"whisper-1"|"gpt-4o-transcribe"|"gpt-4o-mini-transcribe"} [model]
  * @property {string} [language]
  * @property {string} [prompt]
  */
@@ -317,7 +317,7 @@ export class RealtimeClient extends RealtimeEventHandler {
  */
 export type AudioFormatType = "pcm16" | "g711_ulaw" | "g711_alaw";
 export type AudioTranscriptionType = {
-    model: "whisper-1";
+    model?: "whisper-1" | "gpt-4o-transcribe" | "gpt-4o-mini-transcribe";
     language?: string;
     prompt?: string;
 };
